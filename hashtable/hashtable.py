@@ -17,12 +17,16 @@ class HashTable:
     Implement this.
     """
 
-    def fnv1(self, key):
-        """
-        FNV-1 64-bit hash function
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.storage = [None] * capacity
 
-        Implement this, and/or DJB2.
-        """
+    # def fnv1(self, key):
+    #     """
+    #     FNV-1 64-bit hash function
+
+    #     Implement this, and/or DJB2.
+    #     """
 
     def djb2(self, key):
         """
@@ -30,13 +34,20 @@ class HashTable:
 
         Implement this, and/or FNV-1.
         """
+        bited = key.encode()
+
+        totBit = 0
+
+        for bit in bited:
+            totBit += bit
+        return totBit
 
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
+        # return self.fnv1(key) % self.capacity
         return self.djb2(key) % self.capacity
 
     def put(self, key, value):
@@ -48,6 +59,10 @@ class HashTable:
         Implement this.
         """
 
+        hashedKey = self.hash_index(key)
+        # print(hashedKey)
+        self.storage[hashedKey] = value
+
     def delete(self, key):
         """
         Remove the value stored with the given key.
@@ -56,6 +71,8 @@ class HashTable:
 
         Implement this.
         """
+        hashedKey = self.hash_index(key)
+        self.storage[hashedKey] = None
 
     def get(self, key):
         """
@@ -65,6 +82,9 @@ class HashTable:
 
         Implement this.
         """
+        hashedKey = self.hash_index(key)
+        if self.storage[hashedKey] is not None:
+            return self.storage[hashedKey]
 
     def resize(self):
         """
@@ -73,6 +93,12 @@ class HashTable:
 
         Implement this.
         """
+        for i in range(self.capacity):
+            self.storage.append(None)
+
+
+# print(HashTable(8).hash_index("strDDFAD"))
+
 
 if __name__ == "__main__":
     ht = HashTable(2)
@@ -82,6 +108,8 @@ if __name__ == "__main__":
     ht.put("line_3", "Linked list saves the day!")
 
     print("")
+    # ht.delete("line_2")
+    # print(ht.storage)
 
     # Test storing beyond capacity
     print(ht.get("line_1"))
