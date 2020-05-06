@@ -60,6 +60,9 @@ class HashTable:
         """
 
         hashedKey = self.hash_index(key)
+
+        LL = HashTableEntry(key, value)
+        LL.next = self.storage[hashedKey]
         # print(hashedKey)
         self.storage[hashedKey] = value
 
@@ -73,6 +76,9 @@ class HashTable:
         """
         hashedKey = self.hash_index(key)
         self.storage[hashedKey] = None
+
+        dell = self.storage[hashedKey]
+        self.storage[hashedKey] = dell.next
 
     def get(self, key):
         """
