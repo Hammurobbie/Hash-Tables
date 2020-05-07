@@ -20,6 +20,7 @@ class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.storage = [None] * capacity
+        self.hashItems = 0
 
     # def fnv1(self, key):
     #     """
@@ -58,6 +59,11 @@ class HashTable:
 
         Implement this.
         """
+        self.hashItems += 1
+
+        loadFactor = self.hashItems / self.capacity
+
+        print(loadFactor)
 
         hashedKey = self.hash_index(key)
 
